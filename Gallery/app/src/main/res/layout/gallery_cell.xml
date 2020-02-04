@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/ic_launcher_round"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            app:srcCompat="@mipmap/ic_launcher_round" />
     </io.supercharge.shimmerlayout.ShimmerLayout>
 </GridLayout>

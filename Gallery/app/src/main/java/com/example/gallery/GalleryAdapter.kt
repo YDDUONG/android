@@ -17,15 +17,29 @@ import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.gallery_cell.view.*
 
 //recycleView适配器
-class GalleryAdapter: ListAdapter<Photo, MyViewHolder>(DIFFCALLBACK) {
+class GalleryAdapter: ListAdapter<Photo, MyViewHolder>(diffCallBack) {
+    //静态常量 比较器
+    object  diffCallBack: DiffUtil.ItemCallback<Photo>() {
+        override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            //判断是否是同一个对象
+            return oldItem === newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            //内容是否相同
+            return oldItem.photoId == newItem.photoId
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         //加载View
         val holder = MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.gallery_cell, parent, false))
         //点击holder的事件，进入第二个图片
         holder.itemView.setOnClickListener {
             Bundle().apply {
-                putParcelable("PHOTO", getItem(holder.adapterPosition))
-                holder.itemView.findNavController().navigate(R.id.action_galleryFragment_to_photoFragment, this)
+                putParcelableArrayList("PHOTO_LIST", ArrayList(currentList))
+                putInt("PHOTO_POSITION", holder.adapterPosition)
+                holder.itemView.findNavController().navigate(R.id.action_galleryFragment_to_pagerPhotoFragment, this)
             }
         }
         return holder
@@ -66,18 +80,7 @@ class GalleryAdapter: ListAdapter<Photo, MyViewHolder>(DIFFCALLBACK) {
             .into(holder.itemView.imageView)
     }
 
-    //静态常量 比较器
-    object  DIFFCALLBACK: DiffUtil.ItemCallback<Photo>() {
-        override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-            //判断是否是同一个对象
-            return oldItem === newItem
-        }
 
-        override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-            //内容是否相同
-            return oldItem.photoId == newItem.photoId
-        }
-    }
 }
 
 //MyViewHolder

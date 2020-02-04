@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
@@ -35,7 +36,7 @@ class GalleryFragment : Fragment() {
 
         recycleView.apply {
             adapter = galleryAdapter //为recycleView添加适配器
-            layoutManager = GridLayoutManager(requireContext(), 2) //添加布局
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL) //添加布局
         }
 
         //ViewModel
