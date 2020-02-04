@@ -46,12 +46,25 @@ class GalleryAdapter: ListAdapter<Photo, MyViewHolder>(diffCallBack) {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val photo = getItem(position)
         //加载图片
-        holder.itemView.shimmerGalleryLayout.apply {
-            setShimmerColor(0x55FFFFFF) //初始颜色
-            setShimmerAngle(3) //闪动角度
-            startShimmerAnimation() //开始闪动
+        with(holder.itemView) {
+            shimmerGalleryLayout.apply {
+                setShimmerColor(0x55FFFFFF) //初始颜色
+                setShimmerAngle(3) //闪动角度
+                startShimmerAnimation() //开始闪动
+            }
+            textViewUser.text = photo.photoUser
+            textViewLikes.text = photo.photoLikes.toString()
+            textViewFavorites.text = photo.photoFavorites.toString()
+            imageView.layoutParams.height = photo.photoHeight //设置占位符初始高度
         }
+//        holder.itemView.shimmerGalleryLayout.apply {
+//            setShimmerColor(0x55FFFFFF) //初始颜色
+//            setShimmerAngle(3) //闪动角度
+//            startShimmerAnimation() //开始闪动
+//        }
+//        holder.itemView.imageView.layoutParams.height = getItem(position).photoHeight //设置占位符初始高度
         Glide.with(holder.itemView)
             .load(getItem(position).previewUrl)
             .placeholder(R.drawable.ic_photo_black_24dp)
